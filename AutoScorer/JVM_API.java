@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * http请求
  * @author 32249
- * @直接使用百度训练好的DNN评分模型做识别
+ * @直接使用训练好的DNN评分模型做识别
  */
 public class HttpUtil {
 	// 发送请求

@@ -32,7 +32,7 @@ FLAGS = flags.FLAGS
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '0'
 ## Required parameters
 flags.DEFINE_string(
-    "config_file", '/content/EssayKiller_V1/AutoWritter/configs/mega.json',
+    "config_file", '/tmp/EssayKiller/AutoWritter/configs/mega.json',
     "The config json file corresponding to the pre-trained news model. "
     "This specifies the model architecture.")
 
