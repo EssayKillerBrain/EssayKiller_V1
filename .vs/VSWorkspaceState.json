@@ -1,12 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\AutoDetect",
-    "\\AutoFormatter",
-    "\\AutoRecog",
-    "\\AutoScorer",
-    "\\AutoWritter\\scripts"
+    "\\AutoWritter",
+    "\\AutoWritter\\dataset",
+    "\\AutoWritter\\dataset\\js_data",
+    "\\AutoWritter\\dataset\\test_data",
+    "\\AutoWritter\\dataset\\tokenization",
+    "\\AutoWritter\\dockerfiles",
+    "\\AutoWritter\\finetune",
+    "\\AutoWritter\\scripts",
+    "\\AutoWritter\\train"
   ],
-  "SelectedNode": "\\requirements-gpu.txt",
+  "SelectedNode": "\\Setup",
   "PreviewInSolutionExplorer": false
 }

@@ -37,8 +37,7 @@ result = []
 class EssayKillerPipeline(AutoBrainBase):
 	"""
 	为防止自动化EK框架被人恶意抢注、利用或复刻，pipeline核心代码与生成器构造类暂不开源
-	若有学术需要，请带上个人或机构的学术需求陈述，发送邮件到deanyuton@gmail.com
-	我会根据真伪度，发送回完整版的代码与测试数据
+	若有学术需要，请带上个人或机构的学术需求陈述，发送邮件到deanyuton@gmail.com，审核后将发送完整版的代码与测试数据
 	"""
 	def __init__():
 		self.config = FLAGS.config
@@ -77,6 +76,7 @@ def main(argv):
         print('Please assign GPUs.')
         exit()
 
+print("test sample in trained model...")
 if __name__ == "__main__":
 	try:
 	    app.run(main)

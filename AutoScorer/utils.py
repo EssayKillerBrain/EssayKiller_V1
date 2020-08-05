@@ -7,12 +7,12 @@ import sys
 import requests
 import urllib
 import json
-# 获取百度AI的access_token
+# 获取AI平台的access_token
 
 
 def get_value(assess_token, text):
     """
-    请求百度AI DNN语言模型，判断语句的通顺度
+    请求已配置好的AI DNN语言模型，判断语句的通顺度
     """
     # assess_token = '24.21c5c0b1e62afccec4c444614fc8ea9f.2592000.1546754443.282335-15082009'
     url = 'https://aip.baidubce.com/rpc/2.0/nlp/v2/dnnlm_cn?access_token=' + str(assess_token)
