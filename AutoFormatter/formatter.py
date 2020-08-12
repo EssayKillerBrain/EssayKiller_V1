@@ -55,7 +55,8 @@ class AutoFormatter(base):
 			paras.append(lens - 5)
 			paras.append(lens - 3)
 		for pos in paras:
-			result += processed[para1]
+			#按照高考作文要求，为每一个段首加空格
+			result = result +  "    " + processed[para1]
 			result += '。\n'
 		print("formatted paragraph: ", result)
 

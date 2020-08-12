@@ -1,16 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\AutoWritter",
-    "\\AutoWritter\\dataset",
-    "\\AutoWritter\\dataset\\js_data",
-    "\\AutoWritter\\dataset\\test_data",
-    "\\AutoWritter\\dataset\\tokenization",
     "\\AutoWritter\\dockerfiles",
+    "\\AutoWritter\\example",
     "\\AutoWritter\\finetune",
-    "\\AutoWritter\\scripts",
-    "\\AutoWritter\\train"
+    "\\AutoWritter\\finetune\\trained_model",
+    "\\AutoWritter\\scripts"
   ],
-  "SelectedNode": "\\Setup",
+  "SelectedNode": "\\colab_online.ipynb",
   "PreviewInSolutionExplorer": false
 }
