@@ -171,11 +171,14 @@ with tf.Session(config=tf_config, graph=tf.Graph()) as sess:
 
     saver = tf.train.Saver()
     saver.restore(sess, args.ckpt_fn)
-    print('🍺Model loaded. \nInput something please:⬇️')
+    print('模型加载好啦！🍺Bilibili干杯🍺 \n')
+    print('现在将你的作文题精简为一个句子，粘贴到这里:⬇️，然后回车')
     text = input()
     while text != "":
         for i in range(args.samples):
-            print("Sample,", i + 1, " of ", args.samples)
+            print("正在生成第,", i + 1, " of ", args.samples , "篇文章")
+            print("......")
+            print("EssayKilelr正在飞速写作中，请稍后......")
             line = convert_to_unicode(text)
             bert_tokens = tokenizer.tokenize(line)
             encoded = tokenizer.convert_tokens_to_ids(bert_tokens)
@@ -199,5 +202,5 @@ with tf.Session(config=tf_config, graph=tf.Graph()) as sess:
 
             l = re.findall('.{1,70}', gens[0].replace('[UNK]', '').replace('##', ''))
             print("\n".join(l))
-        print('Next try:⬇️')
+        print('还想尝试更多文章吗？ 你可以继续在这里输入:⬇️')
         text = input()
