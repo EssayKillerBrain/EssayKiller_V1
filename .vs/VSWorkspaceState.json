@@ -1,12 +1,14 @@
 {
   "ExpandedNodes": [
     "",
+    "\\AutoFormatter",
+    "\\AutoWritter",
     "\\AutoWritter\\dockerfiles",
     "\\AutoWritter\\example",
     "\\AutoWritter\\finetune",
     "\\AutoWritter\\finetune\\trained_model",
     "\\AutoWritter\\scripts"
   ],
-  "SelectedNode": "\\colab_online.ipynb",
+  "SelectedNode": "\\AutoFormatter\\formatter.py",
   "PreviewInSolutionExplorer": false
 }
