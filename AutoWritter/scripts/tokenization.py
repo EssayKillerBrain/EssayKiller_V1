@@ -20,10 +20,12 @@ from __future__ import print_function
 
 import collections
 import re
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 import unicodedata
 import six
 import tensorflow as tf
-
 
 def validate_case_matches_checkpoint(do_lower_case, init_checkpoint):
   """Checks whether the casing config is consistent with the checkpoint name."""

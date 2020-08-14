@@ -4,6 +4,8 @@ import argparse
 import json
 import re
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 import tensorflow.compat.v1 as tf
 import numpy as np
 
@@ -11,8 +13,8 @@ from modeling import GroverModel, GroverConfig, sample
 from tokenization import *
 from formatter import coarse_formatter, immediate_print
 ##### ignore tf deprecated warning temporarily
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '0'
-tf.logging.set_verbosity(tf.logging.DEBUG)
+
+#tf.logging.set_verbosity(tf.logging.DEBUG)
 
 #try:
 #    from tensorflow.python.util import module_wrapper as deprecation
@@ -203,8 +205,8 @@ with tf.Session(config=tf_config, graph=tf.Graph()) as sess:
 
             l = re.findall('.{1,70}', gens[0].replace('[UNK]', '').replace('##', ''))
             print("EssayKilelr正在飞速排版中，请稍后......\n")
-		    final_output = coarse_formatter("\n".join(l))
-		    immediate_print('排版结束，正在输出......\n', final_output)
+            final_output = coarse_formatter(l)
+            immediate_print('排版结束，正在输出......\n', final_output)
             # print("\n".join(l))
             
         print('还想尝试更多文章吗？ 你可以继续在这里输入:⬇️')

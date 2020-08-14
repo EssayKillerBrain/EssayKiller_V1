@@ -18,6 +18,9 @@ import json
 import math
 import numpy as np
 import six
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 import tensorflow as tf
 import sys
 sys.path.append('D:\Essay_Killer_V1')
@@ -25,6 +28,7 @@ sys.path.append('D:\Essay_Killer_V1\train')
 from optimization_adafactor import *
 from utils import get_assignment_map_from_checkpoint, get_shape_list, get_attention_mask, gelu, layer_norm, dropout, \
     construct_scalar_host_call
+
 
 class GroverConfig(object):
     """Configuration for `GroverModel`"""
