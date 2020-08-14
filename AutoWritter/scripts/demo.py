@@ -9,7 +9,7 @@ import numpy as np
 
 from modeling import GroverModel, GroverConfig, sample
 from tokenization import *
-
+from formatter import coarse_formatter, immediate_print
 ##### ignore tf deprecated warning temporarily
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '0'
 tf.logging.set_verbosity(tf.logging.DEBUG)
@@ -176,9 +176,10 @@ with tf.Session(config=tf_config, graph=tf.Graph()) as sess:
     text = input()
     while text != "":
         for i in range(args.samples):
-            print("正在生成第,", i + 1, " of ", args.samples , "篇文章")
-            print("......")
-            print("EssayKilelr正在飞速写作中，请稍后......")
+            print("正在生成第,", i + 1, " of ", args.samples , "篇文章\n")
+            print("......\n")
+            print("EssayKilelr正在飞速写作中，请稍后......\n")
+
             line = convert_to_unicode(text)
             bert_tokens = tokenizer.tokenize(line)
             encoded = tokenizer.convert_tokens_to_ids(bert_tokens)
@@ -201,6 +202,11 @@ with tf.Session(config=tf_config, graph=tf.Graph()) as sess:
                     gens.append(extraction['extraction'])
 
             l = re.findall('.{1,70}', gens[0].replace('[UNK]', '').replace('##', ''))
-            print("\n".join(l))
+            print("EssayKilelr正在飞速排版中，请稍后......\n")
+		    final_output = coarse_formatter(l)
+		    immediate_print('排版结束，正在输出......\n', final_output)
+            # print("\n".join(l))
+            
+
         print('还想尝试更多文章吗？ 你可以继续在这里输入:⬇️')
         text = input()
