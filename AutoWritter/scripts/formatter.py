@@ -60,23 +60,22 @@ class AutoFormatter(object):
 			paras.append(lens - 5)
 			paras.append(lens - 3)
 		for pos in paras:
-			#按照高考作文要求，为每一个段首加空格
+			# 按照高考作文要求，为每一个段首加空格
 			result = result +  "    " + processed[para1]
 			result += '。\n'
 		print("formatted paragraph: ", result)
 
 def coarse_formatter(text):
 	'''第一版排版器'''
-	print("原始作文文本为：\n", text)
 	paras = []
 	final = ""
 	text_list = text.split("。")
-	#text_list = text_list[:15]
+	# text_list = text_list[:15]
 	if text_list[-1] != '':
 		text_list = text_list[:-1]
-	#print("去掉尾部后为：", text_list)
-	#分段落，开头3句为段首，中间5句为段中，最后5句为段尾
-	#print("split sentence slice lens: ", len(text_list))
+	# print("去掉尾部后为：", text_list)
+	# 分段落，开头3句为段首，中间5句为段中，最后5句为段尾
+	# print("split sentence slice lens: ", len(text_list))
 	para = 3
 	lens =  len(text_list)
 	paras.append(text_list[:3])
@@ -85,7 +84,7 @@ def coarse_formatter(text):
 			#print("para: ", para ," | final: ", lens - 8)
 			paras.append(text_list[para:para+5])
 			para += 5
-		#print("现在添加段尾：", text_list[para:-1])
+		# print("现在添加段尾：", text_list[para:-1])
 		if para == lens - 1:
 			pass
 		else:
@@ -94,9 +93,9 @@ def coarse_formatter(text):
 		paras.append(3)
 		paras.append(lens - 5)
 		paras.append(lens - 3)
-	#print("最终段落为：", paras)
+	# print("最终段落为：", paras)
 	for para in paras:
-		#print("paras: ", para)
+		# print("paras: ", para)
 		if len(para) == 1:
 			final += "    " + para[0] + "。\n"
 		else:

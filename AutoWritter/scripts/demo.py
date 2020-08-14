@@ -203,10 +203,9 @@ with tf.Session(config=tf_config, graph=tf.Graph()) as sess:
 
             l = re.findall('.{1,70}', gens[0].replace('[UNK]', '').replace('##', ''))
             print("EssayKilelr正在飞速排版中，请稍后......\n")
-		    final_output = coarse_formatter(l)
+		    final_output = coarse_formatter("\n".join(l))
 		    immediate_print('排版结束，正在输出......\n', final_output)
             # print("\n".join(l))
             
-
         print('还想尝试更多文章吗？ 你可以继续在这里输入:⬇️')
         text = input()
