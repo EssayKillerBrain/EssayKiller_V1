@@ -88,7 +88,7 @@ class GroverConfig(object):
     @classmethod
     def from_json_file(cls, json_file):
         """Constructs a `NewsConfig` from a json file of parameters."""
-        with tf.gfile.GFile(json_file, "r") as reader:
+        with tf.io.gfile.GFile(json_file, "r") as reader:
             text = reader.read()
         return cls.from_dict(json.loads(text))
 
@@ -274,13 +274,13 @@ def embed(input_ids,
     """
     (batch_size, seq_length) = get_shape_list(input_ids, expected_rank=2)
 
-    embedding_table = tf.get_variable(
+    embedding_table = tf.compat.v1.get_variable(
         name='word_embed',
         shape=[vocab_size, embedding_size],
         initializer=create_initializer(initializer_range),
     )
 
-    assert_op = tf.assert_less_equal(tf.reduce_max(input_ids), vocab_size - 1)
+    assert_op = tf.compat.v1.assert_less_equal(tf.reduce_max(input_ids), vocab_size - 1)
     with tf.control_dependencies([assert_op]):
         if use_one_hot_embeddings:
             flat_input_ids = tf.reshape(input_ids, [-1])
@@ -291,10 +291,10 @@ def embed(input_ids,
 
         embedded_input = tf.reshape(output_flat, [batch_size, seq_length, embedding_size])
 
-    assert_op = tf.assert_less_equal(seq_length, max_position_embeddings)
+    assert_op = tf.compat.v1.assert_less_equal(seq_length, max_position_embeddings)
 
     with tf.control_dependencies([assert_op]):
-        full_position_embeddings = tf.get_variable(
+        full_position_embeddings = tf.compat.v1.get_variable(
             name='pos_embed',
             shape=[max_position_embeddings, embedding_size],
             initializer=create_initializer(initializer_range),
@@ -334,7 +334,7 @@ def _top_p_sample(logits, ignore_ids=None, num_samples=1, p=0.9):
     :return: [batch_size, num_samples] samples
     # TODO FIGURE OUT HOW TO DO THIS ON TPUS. IT'S HELLA SLOW RIGHT NOW, DUE TO ARGSORT I THINK
     """
-    with tf.variable_scope('top_p_sample'):
+    with tf.compat.v1.variable_scope('top_p_sample'):
         batch_size, vocab_size = get_shape_list(logits, expected_rank=2)
 
         probs = tf.nn.softmax(logits if ignore_ids is None else logits - tf.cast(ignore_ids[None], tf.float32) * 1e10,
@@ -387,7 +387,7 @@ def _top_k_sample(logits, ignore_ids=None, num_samples=1, k=10):
     :return: [batch_size, num_samples] samples
     # TODO FIGURE OUT HOW TO DO THIS ON TPUS. IT'S HELLA SLOW RIGHT NOW, DUE TO ARGSORT I THINK
     """
-    with tf.variable_scope('top_p_sample'):
+    with tf.compat.v1.variable_scope('top_p_sample'):
         batch_size, vocab_size = get_shape_list(logits, expected_rank=2)
 
         probs = tf.nn.softmax(logits if ignore_ids is None else logits - tf.cast(ignore_ids[None], tf.float32) * 1e10,
@@ -466,8 +466,8 @@ class GroverModel(object):
             assert features_ == (config.hidden_size // config.num_attention_heads)
             caches = tf.unstack(cache, axis=1)
 
-        with tf.variable_scope(scope, default_name='newslm', reuse=reuse):
-            with tf.variable_scope("embeddings"):
+        with tf.compat.v1.variable_scope(scope, default_name='newslm', reuse=reuse):
+            with tf.compat.v1.variable_scope("embeddings"):
                 embeddings, self.embedding_table = embed(self.input_ids, config.vocab_size,
                                                          config.hidden_size,
                                                          position_offset=self.cache_length,
@@ -483,7 +483,7 @@ class GroverModel(object):
             hidden_state = tf.reshape(embeddings, [self.batch_size * self.seq_length, self.config.hidden_size])
             new_kvs = []
             for layer_idx, layer_cache in enumerate(caches):
-                with tf.variable_scope('layer{:02d}'.format(layer_idx)):
+                with tf.compat.v1.variable_scope('layer{:02d}'.format(layer_idx)):
                     # [batch_size * seq_length, hidden_size]
                     attention_output, new_kv = attention_layer(
                         hidden_state,
@@ -707,7 +707,7 @@ def sample_step(tokens, ignore_ids, news_config, batch_size=1, p_for_topp=0.95, 
         config=news_config,
         is_training=False,
         input_ids=tokens,
-        reuse=tf.AUTO_REUSE,
+        reuse=tf.compat.v1.AUTO_REUSE,
         scope='newslm',
         chop_off_last_token=False,
         do_cache=True,

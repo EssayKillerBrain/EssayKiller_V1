@@ -111,7 +111,7 @@ def coarse_formatter(text):
 				count += 1
 	print("\n")
 		
-	print("最终文本为：\n", final)
+	# print("最终文本为：\n", final)
 	return final
 
 

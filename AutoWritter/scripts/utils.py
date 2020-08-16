@@ -15,13 +15,10 @@
 
 import collections
 import re
-
 import six
 import tensorflow as tf
 import numpy as np
 from tensorflow.python.lib.io import file_io
-
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 def _save_np(absolute_fn, array):
     if absolute_fn.startswith('gs://'):
@@ -54,7 +51,7 @@ def assert_rank(tensor, expected_rank, name=None):
 
     actual_rank = tensor.shape.ndims
     if actual_rank not in expected_rank_dict:
-        scope_name = tf.get_variable_scope().name
+        scope_name = tf.compat.v1.get_variable().name
         raise ValueError(
             "For the tensor `%s` in scope `%s`, the actual rank "
             "`%d` (shape = %s) is not equal to the expected rank `%s`" %
@@ -110,20 +107,20 @@ def gelu(input_tensor):
     Returns:
       `input_tensor` with the GELU activation applied.
     """
-    cdf = 0.5 * (1.0 + tf.erf(input_tensor / tf.sqrt(2.0)))
+    cdf = 0.5 * (1.0 + tf.math.erf(input_tensor / tf.sqrt(2.0)))
     return input_tensor * cdf
 
 
 def layer_norm(input_tensor, name=None, epsilon=1e-5):
     """Run layer normalization on the last dimension of the tensor."""
     name2use = f'LayerNorm_{name}' if name is not None else name
-    with tf.variable_scope(name2use, default_name='LayerNorm'):
+    with tf.compat.v1.variable_scope(name2use, default_name='LayerNorm'):
         dim = input_tensor.shape[-1].value
-        gamma = tf.get_variable('gamma', [dim], initializer=tf.constant_initializer(1))
-        beta = tf.get_variable('beta', [dim], initializer=tf.constant_initializer(0))
+        gamma = tf.compat.v1.get_variable('gamma', [dim], initializer=tf.constant_initializer(1))
+        beta = tf.compat.v1.get_variable('beta', [dim], initializer=tf.constant_initializer(0))
         mean = tf.reduce_mean(input_tensor, axis=-1, keepdims=True)
         std = tf.reduce_mean(tf.square(input_tensor - mean), axis=-1, keepdims=True)
-        input_tensor = (input_tensor - mean) * tf.rsqrt(std + epsilon)
+        input_tensor = (input_tensor - mean) * tf.math.rsqrt(std + epsilon)
         input_tensor = input_tensor * gamma + beta
     return input_tensor
 

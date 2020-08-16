@@ -8,7 +8,11 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 import tensorflow.compat.v1 as tf
 import numpy as np
-
+tf.logging.set_verbosity(tf.logging.ERROR)
+tf.get_logger().setLevel('INFO')
+tf.autograph.set_verbosity(1)
+import logging
+logging.getLogger("tensorflow").setLevel(logging.WARNING)
 from modeling import GroverModel, GroverConfig, sample
 from tokenization import *
 from formatter import coarse_formatter, immediate_print
@@ -143,9 +147,9 @@ def extract_generated_target(output_tokens, tokenizer):
 
 args = parser.parse_args()
 proj_root_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-print("proj_root_path: ", proj_root_path)
+# print("proj_root_path: ", proj_root_path)
 vocab_file_path = os.path.join(proj_root_path, "dataset/tokenization/clue-vocab.txt")
-print("vocab_file_path: ", vocab_file_path)
+# print("vocab_file_path: ", vocab_file_path)
 tokenizer = FullTokenizer(vocab_file=vocab_file_path , do_lower_case=True)
 news_config = GroverConfig.from_json_file(args.config_fn)
 
@@ -160,22 +164,26 @@ batch_size_per_chunk = int(np.ceil(args.batch_size / num_chunks))
 # This controls the top p for each generation.
 top_p = np.ones((num_chunks, batch_size_per_chunk), dtype=np.float32) * args.top_p
 
-tf_config = tf.ConfigProto(allow_soft_placement=True)
+tf_config = tf.compat.v1.ConfigProto(allow_soft_placement=True)
 
-with tf.Session(config=tf_config, graph=tf.Graph()) as sess:
-    initial_context = tf.placeholder(tf.int32, [batch_size_per_chunk, None])
-    p_for_topp = tf.placeholder(tf.float32, [batch_size_per_chunk])
-    eos_token = tf.placeholder(tf.int32, [])
-    min_len = tf.placeholder(tf.int32, [])
+with tf.compat.v1.Session(config=tf_config, graph=tf.Graph()) as sess:
+    initial_context = tf.compat.v1.placeholder(tf.int32, [batch_size_per_chunk, None])
+    p_for_topp = tf.compat.v1.placeholder(tf.float32, [batch_size_per_chunk])
+    eos_token = tf.compat.v1.placeholder(tf.int32, [])
+    min_len = tf.compat.v1.placeholder(tf.int32, [])
     tokens, probs = sample(news_config=news_config, initial_context=initial_context,
                            eos_token=eos_token, min_len=min_len, ignore_ids=None, p_for_topp=p_for_topp,
                            do_topk=False)
 
-    saver = tf.train.Saver()
+    saver = tf.compat.v1.train.Saver()
     saver.restore(sess, args.ckpt_fn)
     print('模型加载好啦！🍺Bilibili干杯🍺 \n')
     print('现在将你的作文题精简为一个句子，粘贴到这里:⬇️，然后回车')
+    print("\n")
+    print("**********************************************作文题目**********************************************\n")
     text = input()
+    print("\n")
+    print("**********************************************作文题目**********************************************\n")
     while text != "":
         for i in range(args.samples):
             print("正在生成第,", i + 1, " of ", args.samples , "篇文章\n")
@@ -205,9 +213,13 @@ with tf.Session(config=tf_config, graph=tf.Graph()) as sess:
 
             l = re.findall('.{1,70}', gens[0].replace('[UNK]', '').replace('##', ''))
             print("EssayKilelr正在飞速排版中，请稍后......\n")
-            final_output = coarse_formatter(l)
+            final_output = coarse_formatter("".join(l))
             immediate_print('排版结束，正在输出......\n', final_output)
-            # print("\n".join(l))
+            print("\n")
             
         print('还想尝试更多文章吗？ 你可以继续在这里输入:⬇️')
+        print("**********************************************作文题目**********************************************\n")
         text = input()
+        print("\n")
+        print("**********************************************作文题目**********************************************\n")
+   
