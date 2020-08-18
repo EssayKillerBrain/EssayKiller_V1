@@ -212,10 +212,11 @@ with tf.compat.v1.Session(config=tf_config, graph=tf.Graph()) as sess:
                     gens.append(extraction['extraction'])
 
             l = re.findall('.{1,70}', gens[0].replace('[UNK]', '').replace('##', ''))
-            print("EssayKilelr正在飞速排版中，请稍后......\n")
+            # print("EssayKilelr正在飞速排版中，请稍后......\n")
             final_output = coarse_formatter("".join(l))
             immediate_print('排版结束，正在输出......\n', final_output)
             print("\n")
+            print("把👆复制到Word或其他编辑器中即可转为标准作文排版\n")
             
         print('还想尝试更多文章吗？ 你可以继续在这里输入:⬇️')
         print("**********************************************作文题目**********************************************\n")
