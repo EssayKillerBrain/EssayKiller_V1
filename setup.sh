@@ -1,12 +1,24 @@
 FROM tensorflow/tensorflow:1.15.0-gpu-py3-jupyter
 
 RUN apt update && apt install -y --no-install-recommends git
-RUN git clone -q https://github.com/imcaspar/gpt2-ml && mkdir -p gpt2-ml/models/mega
 
-WORKDIR /gpt2-ml
+!pip install pandas==0.24.2 &> tmp.log
+!pip install regex==2019.4.14 &> tmp.log
+!pip install h5py==2.10.0 &> tmp.log
+!pip install numpy==1.18.4 &> tmp.log
+!pip install tensorboard==1.15.0 &> tmp.log
+!pip install tensorflow-gpu==1.15.2 &> tmp.log
+!pip install tensorflow-estimator==1.15.1 &> tmp.log
+!pip install tqdm==4.31.1 &> tmp.log
+!pip install requests==2.22.0 &> tmp.log
+!pip install ujson==2.0.3 &> tmp.log
 
-RUN perl 3rd/gdown.pl/gdown.pl https://drive.google.com/open?id=1n_5-tgPpQ1gqbyLPbP1PwiFi2eo7SWw_ models/mega/model.ckpt-100000.data-00000-of-00001
-RUN wget -q --show-progress https://github.com/imcaspar/gpt2-ml/releases/download/v0.5/model.ckpt-100000.index -P models/mega
-RUN wget -q --show-progress https://github.com/imcaspar/gpt2-ml/releases/download/v0.5/model.ckpt-100000.meta -P models/mega
+!mkdir -p /home/EssayKiller/AutoWritter/finetune/trained_models
+
+%cd /home/EssayKiller/AutoWritter/finetune/
+!perl /home/EssayKiller/AutoWritter/scripts/gdown.pl https://drive.google.com/open?id=1ujWYTOvRLGJX0raH-f-lPZa3-RN58ZQx trained_models/model.ckpt-280000.data-00000-of-00001
+!wget -q --show-progress https://github.com/EssayKillerBrain/EssayKiller/releases/download/v1.0/model.ckpt-280000.index -P /home/EssayKiller/AutoWritter/finetune/models/mega
+!wget -q --show-progress https://github.com/EssayKillerBrain/EssayKiller/releases/download/v1.0/model.ckpt-280000.meta -P /home/EssayKiller/AutoWritter/finetune/models/mega
+
 
 CMD ["bash", "-c", "jupyter notebook --ip 0.0.0.0 --no-browser --allow-root pretrained_model_demo.ipynb"]

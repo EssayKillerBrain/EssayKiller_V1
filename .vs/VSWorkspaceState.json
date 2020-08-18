@@ -7,8 +7,9 @@
     "\\AutoWritter\\example",
     "\\AutoWritter\\finetune",
     "\\AutoWritter\\finetune\\trained_model",
-    "\\AutoWritter\\scripts"
+    "\\AutoWritter\\scripts",
+    "\\AutoWritter\\train"
   ],
-  "SelectedNode": "\\AutoFormatter\\formatter.py",
+  "SelectedNode": "\\AutoWritter",
   "PreviewInSolutionExplorer": false
 }
