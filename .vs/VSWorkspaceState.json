@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\AutoFormatter",
-    "\\AutoWritter",
+    "\\AutoDetect",
+    "\\AutoRecog",
+    "\\AutoSummarize",
     "\\AutoWritter\\dockerfiles",
     "\\AutoWritter\\example",
     "\\AutoWritter\\finetune",
@@ -10,6 +11,6 @@
     "\\AutoWritter\\scripts",
     "\\AutoWritter\\train"
   ],
-  "SelectedNode": "\\AutoWritter",
+  "SelectedNode": "\\AutoScorer",
   "PreviewInSolutionExplorer": false
 }

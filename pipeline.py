@@ -42,10 +42,16 @@ class EssayKillerPipeline(AutoBrainBase):
 	input_feed: text input_feed
 	sequence_len: sequence length
 	...
-	
+	In order to prevent the EssayKiller framework from being maliciously registered, used or copied, 
+	the pipeline core code and construction classes are temporarily not open-sourced
+	If you have academic needs, please bring an individual or institution's academic needs statemen
+	t and send an email to deanyuton@gmail.com
+	According to the stated information, I will send the full version of the code and 
+	test data to the given mailbox. Thanks for understanding~
+
 	为防止自动化EK框架被人恶意抢注、利用或复刻，pipeline核心代码与构造类暂不开源
 	若有学术需要，请带上个人或机构的学术需求陈述，发送邮件到deanyuton@gmail.com
-	根据陈述信息，我将会发送完整版的代码与测试数据到给定的邮箱。谢谢理解
+	根据陈述信息，我将会发送完整版的代码与测试数据到给定的邮箱。感谢理解~
 	"""
 	def __init__():
 		self.config = FLAGS.config
@@ -62,6 +68,9 @@ class EssayKillerPipeline(AutoBrainBase):
 
 	def generage_char_from_videostream():
 		pass 
+
+	def summarize_exam_topic():
+		pass
 
 	def extract_topic_sentence():
 		pass 
