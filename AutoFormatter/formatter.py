@@ -117,11 +117,11 @@ def coarse_formatter(text):
 
 
 def immediate_print(msg, text):
-    print(msg)
+    #print(msg)
     for i in text:
         print(i, end="")
         sys.stdout.flush()
-        time.sleep(random.random()/20)
+        time.sleep(random.random()/10)
 
 if __name__ == "__main__":
 	try:
